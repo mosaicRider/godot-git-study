@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://cmha1xyeqs2di"]
+
+[ext_resource type="Texture2D" uid="uid://cfml47isjn1xi" path="res://resource/puzzle0.png" id="1_b6oup"]
+[ext_resource type="Script" path="res://puzzle/scene/scene.gd" id="2_kpsr7"]
+
+[node name="Background" type="Sprite2D"]
+texture = ExtResource("1_b6oup")
+centered = false
+script = ExtResource("2_kpsr7")
+metadata/_edit_lock_ = true

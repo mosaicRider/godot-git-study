@@ -1,0 +1,32 @@
+[gd_scene load_steps=5 format=3 uid="uid://drio7etbc5f3t"]
+
+[ext_resource type="PackedScene" uid="uid://cmha1xyeqs2di" path="res://puzzle/scene/scene.tscn" id="1_6djsd"]
+[ext_resource type="Texture2D" uid="uid://in4e47qp2r51" path="res://resource/puzzle2.png" id="2_jstko"]
+[ext_resource type="Script" path="res://puzzle/objects/teleporter.gd" id="3_6jbcu"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_54y57"]
+radius = 19.0
+
+[node name="Background" instance=ExtResource("1_6djsd")]
+position = Vector2(192, 108)
+rotation = -6.28319
+texture = ExtResource("2_jstko")
+offset = Vector2(-192, -108)
+
+[node name="TelH1" type="Area2D" parent="." index="0"]
+position = Vector2(12, -78)
+scale = Vector2(1.01053, 1.13805)
+script = ExtResource("3_6jbcu")
+target_path = "res://puzzle/scene/h1.tscn"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TelH1" index="0"]
+shape = SubResource("CircleShape2D_54y57")
+
+[node name="TelH2" type="Area2D" parent="." index="1"]
+position = Vector2(-155, -3.05176e-05)
+scale = Vector2(1.49053, 1.52256)
+script = ExtResource("3_6jbcu")
+target_path = "res://puzzle/scene/h2.tscn"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TelH2" index="0"]
+shape = SubResource("CircleShape2D_54y57")

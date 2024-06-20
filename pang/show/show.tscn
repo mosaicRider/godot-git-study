@@ -1,0 +1,25 @@
+[gd_scene load_steps=3 format=3 uid="uid://b31rdt0h5egav"]
+
+[ext_resource type="Script" path="res://pang/show/Label.gd" id="1_g572w"]
+[ext_resource type="Script" path="res://pang/show/Label2.gd" id="2_2yuu8"]
+
+[node name="Node" type="Node"]
+metadata/_edit_horizontal_guides_ = [80.0]
+metadata/_edit_vertical_guides_ = [95.0, 1046.0]
+
+[node name="Label" type="Label" parent="."]
+offset_left = 95.0
+offset_top = 56.0
+offset_right = 135.0
+offset_bottom = 79.0
+text = "00"
+script = ExtResource("1_g572w")
+
+[node name="Label2" type="Label" parent="."]
+offset_left = 1005.0
+offset_top = 56.0
+offset_right = 1045.0
+offset_bottom = 79.0
+text = "00"
+horizontal_alignment = 2
+script = ExtResource("2_2yuu8")

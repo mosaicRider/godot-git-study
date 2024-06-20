@@ -1,0 +1,45 @@
+[gd_scene load_steps=5 format=3 uid="uid://cf1ygxlogj56m"]
+
+[ext_resource type="FontFile" uid="uid://bqkeuuq88eiuk" path="res://puzzle/ui/defualt_font_file.tres" id="1_dy6xv"]
+[ext_resource type="Texture2D" uid="uid://bqjxrr0oxa7y4" path="res://resource/bubble01.png" id="1_k70w8"]
+[ext_resource type="Texture2D" uid="uid://dy106aqro2y3u" path="res://resource/bubble02.png" id="1_tetvs"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_e7pwi"]
+content_margin_left = 7.0
+content_margin_top = 5.0
+content_margin_right = 7.0
+content_margin_bottom = 5.0
+texture = ExtResource("1_k70w8")
+
+[node name="DialogBubble" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = -1.0
+offset_top = -1.0
+offset_right = -1.0
+offset_bottom = -1.0
+
+[node name="Content" type="Label" parent="."]
+layout_mode = 0
+offset_left = 13.0
+offset_top = -155.0
+offset_right = 251.0
+offset_bottom = -9.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("1_dy6xv")
+theme_override_font_sizes/font_size = 25
+theme_override_styles/normal = SubResource("StyleBoxTexture_e7pwi")
+text = "垂死病中惊坐起,笑问客从何处来。"
+autowrap_mode = 2
+
+[node name="Handle" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = -76.0
+offset_top = -36.0
+offset_right = 145.0
+offset_bottom = 66.0
+rotation = -0.785398
+scale = Vector2(0.134749, 0.266915)
+pivot_offset = Vector2(83, 20)
+texture = ExtResource("1_tetvs")
+flip_h = true

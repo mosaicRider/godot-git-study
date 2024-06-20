@@ -1,0 +1,74 @@
+[gd_scene load_steps=9 format=3 uid="uid://ry1ajiwk1a80"]
+
+[ext_resource type="Texture2D" uid="uid://i2h3u0m85uh8" path="res://resource/line.png" id="1_3otwy"]
+[ext_resource type="Script" path="res://pang/map/area2d.gd" id="2_x82jj"]
+[ext_resource type="PackedScene" uid="uid://b51uhssn6if2s" path="res://pang/ball/ball.tscn" id="3_dq76g"]
+[ext_resource type="Script" path="res://pang/map/area2d_tb.gd" id="3_hjvjk"]
+[ext_resource type="PackedScene" uid="uid://b31rdt0h5egav" path="res://pang/show/show.tscn" id="5_dudec"]
+[ext_resource type="PackedScene" uid="uid://drgv5sxj5c443" path="res://pang/player/player1/palyer1.tscn" id="6_1gct0"]
+[ext_resource type="PackedScene" uid="uid://cl6o10hcyamah" path="res://pang/drag/control.tscn" id="8_hgtu8"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_m4llv"]
+size = Vector2(15, 648)
+
+[node name="Node" type="Node"]
+
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_right = 1152.0
+offset_bottom = 648.0
+color = Color(0, 0, 0, 1)
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(579, 324)
+scale = Vector2(-0.622521, 3.30263)
+texture = ExtResource("1_3otwy")
+
+[node name="Area2D" type="Area2D" parent="."]
+script = ExtResource("2_x82jj")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(1.5, 324)
+shape = SubResource("RectangleShape2D_m4llv")
+
+[node name="Area2D2" type="Area2D" parent="."]
+position = Vector2(1151, 1)
+script = ExtResource("2_x82jj")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D2"]
+position = Vector2(1.5, 324)
+shape = SubResource("RectangleShape2D_m4llv")
+
+[node name="Area2D4" type="Area2D" parent="."]
+position = Vector2(579, 0)
+rotation = -1.57079
+script = ExtResource("3_hjvjk")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D4"]
+scale = Vector2(1, 1.8)
+shape = SubResource("RectangleShape2D_m4llv")
+
+[node name="Area2D5" type="Area2D" parent="."]
+position = Vector2(579, 638)
+rotation = -1.57079
+script = ExtResource("3_hjvjk")
+y = -5
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D5"]
+scale = Vector2(1, 1.8)
+shape = SubResource("RectangleShape2D_m4llv")
+
+[node name="ball" parent="." instance=ExtResource("3_dq76g")]
+position = Vector2(579, 324)
+vec = Vector2(5, 0)
+
+[node name="score" parent="." instance=ExtResource("5_dudec")]
+metadata/_edit_vertical_guides_ = [95.0]
+
+[node name="Control" parent="." instance=ExtResource("8_hgtu8")]
+
+[node name="player1" parent="." instance=ExtResource("6_1gct0")]
+position = Vector2(64, 325)
+
+[node name="player2" parent="." instance=ExtResource("6_1gct0")]
+position = Vector2(1080, 325)
+x = -5

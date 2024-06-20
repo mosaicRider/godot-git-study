@@ -1,0 +1,58 @@
+[gd_scene load_steps=6 format=3 uid="uid://ry1ajiwk1a80"]
+
+[ext_resource type="Texture2D" uid="uid://i2h3u0m85uh8" path="res://Resource/line.png" id="1_3otwy"]
+[ext_resource type="Script" path="res://map/area2d.gd" id="2_x82jj"]
+[ext_resource type="PackedScene" uid="uid://b51uhssn6if2s" path="res://ball/ball.tscn" id="3_dq76g"]
+[ext_resource type="Script" path="res://map/area2d_tb.gd" id="3_hjvjk"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_m4llv"]
+size = Vector2(15, 648)
+
+[node name="Node" type="Node"]
+
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_right = 1152.0
+offset_bottom = 648.0
+color = Color(0, 0, 0, 1)
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(579, 324)
+scale = Vector2(-0.622521, 3.30263)
+texture = ExtResource("1_3otwy")
+
+[node name="Area2D" type="Area2D" parent="."]
+script = ExtResource("2_x82jj")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(1.5, 324)
+shape = SubResource("RectangleShape2D_m4llv")
+
+[node name="Area2D2" type="Area2D" parent="."]
+position = Vector2(1151, 1)
+script = ExtResource("2_x82jj")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D2"]
+position = Vector2(1.5, 324)
+shape = SubResource("RectangleShape2D_m4llv")
+
+[node name="Area2D4" type="Area2D" parent="."]
+position = Vector2(579, 0)
+rotation = -1.57079
+script = ExtResource("3_hjvjk")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D4"]
+scale = Vector2(1, 1.8)
+shape = SubResource("RectangleShape2D_m4llv")
+
+[node name="Area2D5" type="Area2D" parent="."]
+position = Vector2(579, 638)
+rotation = -1.57079
+script = ExtResource("3_hjvjk")
+y = -5
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D5"]
+scale = Vector2(1, 1.8)
+shape = SubResource("RectangleShape2D_m4llv")
+
+[node name="Area2D3" parent="." instance=ExtResource("3_dq76g")]
+position = Vector2(579, 342)
