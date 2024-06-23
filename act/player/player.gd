@@ -1,6 +1,7 @@
 class_name Player
 extends CharacterBody2D
 
+@export var can_combo := true
 var defualt_gravity := ProjectSettings.get("physics/2d/default_gravity") as float
 const RUN_SPEED := 200.0 as float
 const JUMP_SPEED := -380.0 as float
@@ -19,6 +20,8 @@ const AIR_ACCELERATION:= RUN_SPEED/0.1
 
 # 因状态机代码调整，导致跳跃变得迟钝，解决办法，第一帧关掉重力
 var is_first_tick := false
+# 连击
+var is_combo_requested:= false
 enum State {
 	IDLE,
 	RUNNING,
@@ -27,8 +30,18 @@ enum State {
 	LANDING,
 	WALL_SLIDING,
 	WALL_JUMP,
+	Hit_1,
+	Hit_2,
+	Hit_3,
 }
-const GROUND_STATES := [State.IDLE,State.RUNNING,State.LANDING]
+const GROUND_STATES := [
+	State.IDLE,
+	State.RUNNING,
+	State.LANDING,
+	State.Hit_1,
+	State.Hit_2,
+	State.Hit_3,
+]
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("jump") && jump_request_timer :
@@ -38,6 +51,9 @@ func _unhandled_input(event: InputEvent) -> void:
 		jump_request_timer.stop()
 		if velocity.y < JUMP_SPEED/2: 
 			velocity.y  = JUMP_SPEED/2
+	
+	if Input.is_action_just_pressed("attack") and can_combo:
+		is_combo_requested = true
 
 func stand(gravity:float,delta: float)->void:
 	var acceleration := ACCELERATION if is_on_floor() else AIR_ACCELERATION
@@ -83,6 +99,8 @@ func tick_physics(state:State,delta: float) -> void:
 				stand(0.0 if is_first_tick else defualt_gravity,delta)
 			else:
 				stand(defualt_gravity,delta)
+		State.Hit_1,State.Hit_2,State.Hit_3:
+			stand(defualt_gravity,delta)
 	
 	is_first_tick = false
 	
@@ -120,6 +138,15 @@ func transition_state(from:State,to:State)-> void:
 			velocity = WALL_JUMP_SPEED
 			velocity.x *= get_wall_normal().x
 			jump_request_timer.stop()
+		State.Hit_1:
+			animation_player.play("hit1")
+			is_combo_requested = false
+		State.Hit_2:
+			animation_player.play("hit2")
+			is_combo_requested = false
+		State.Hit_3:
+			animation_player.play("hit3")
+			is_combo_requested = false
 	
 	#蹬墙时，世界减速
 	#if to == State.WALL_JUMP:
@@ -136,6 +163,9 @@ func get_next_state(state:State) -> State:
 	if should_jump:
 		return State.JUMP
 		
+	if state in GROUND_STATES and not is_on_floor():
+		return State.FALL
+		
 	var drection = Input.get_axis("move_left","move_right")
 	#if is_zero_approx(drection):
 	# 加入缓缓加速防止滑行
@@ -143,13 +173,13 @@ func get_next_state(state:State) -> State:
 	
 	match state:
 		State.IDLE:
-			if not is_on_floor():
-				return State.FALL
+			if Input.is_action_just_pressed("attack"):
+				return State.Hit_1
 			if not is_still:
 				return State.RUNNING
 		State.RUNNING:
-			if not is_on_floor():
-				return State.FALL
+			if Input.is_action_just_pressed("attack"):
+				return State.Hit_1
 			if is_still:
 				return State.IDLE
 		State.JUMP:
@@ -177,6 +207,15 @@ func get_next_state(state:State) -> State:
 				return State.WALL_JUMP
 			if velocity.y>=0:
 				return State.FALL
+		State.Hit_1:
+			if not animation_player.is_playing():
+				return State.Hit_2 if is_combo_requested else State.IDLE
+		State.Hit_2:
+			if not animation_player.is_playing():
+				return State.Hit_3 if is_combo_requested else State.IDLE
+		State.Hit_3:
+			if not animation_player.is_playing():
+				return State.IDLE
 	return state
 
 func can_wall_sliding() -> bool:

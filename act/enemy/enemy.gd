@@ -6,14 +6,14 @@ enum Direction {
 	Right=1,
 }
 
-@export var direction := Direction.Left:
+@export var direction :int = Direction.Left:
 	set(v):
 		direction = v
 		if not is_node_ready():
 			await ready
 		graphics.scale.x = -direction
 	
-@export var max_speed := 180.0 as float
+@export var max_speed := 150.0 as float
 @export var acceleration := 2000.0 as float
 var defualt_gravity := ProjectSettings.get("physics/2d/default_gravity") as float
 @onready var graphics: Node2D = $Graphics
